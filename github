@@ -1,0 +1,30 @@
+{
+  graphQLHub
+  github {
+    user(username: "ptouchton") {
+      login
+      id
+      avatar_url
+    },
+    repo(name: "http-with-node", ownerUsername: "ptouchton") {
+      commits{
+        message,
+        date
+      }
+    }
+  }
+}
+
+query GitHubRepo($includeRepos: Boolean!) {
+  graphQLHub
+  github {
+    user(username: "ptouchton") {
+      login
+      id
+      avatar_url
+      repos @skip(if: $includeRepos) {
+        name
+      }
+    }
+  }
+}
