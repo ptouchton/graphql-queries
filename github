@@ -28,3 +28,37 @@ query GitHubRepo($includeRepos: Boolean!) {
     }
   }
 }
+
+query TwoUsers($userName1: String!, $userName2: String!)
+{
+  github {
+    user1: user(username: $userName1) {
+      id
+      company
+      avatar_url
+    }
+    user2: user(username: $userName2) {
+      id
+      company
+      avatar_url
+    }
+  }
+}
+
+query TwoUsers($userName1: String!, $userName2: String!)
+{
+  github {
+    user1: user(username: $userName1) {
+      ...UserInfo
+    }
+    user2: user(username: $userName2) {
+      ...UserInfo
+    }
+  }
+}
+
+fragment UserInfo on GithubUser {
+  id
+  company
+  avatar_url
+}
