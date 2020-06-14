@@ -1,5 +1,7 @@
 module.exports = {
   development: {
-    database: 'contests'
+    database: 'contests',
+    user: 'p_tou',
+    password: 'f7abem3v'
   }
 };
