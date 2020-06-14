@@ -1,0 +1,16 @@
+{
+  me(key: "4242") {
+    id
+    firstName,
+    lastName
+    email
+    contests{
+      id
+      code
+      title
+      descriptiopn
+      status
+      createdAt
+    }
+  }
+}
