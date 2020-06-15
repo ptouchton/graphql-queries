@@ -1,6 +1,8 @@
 const humps = require('humps');
+const { orderedFor } = require('../lib/util');
 
 module.exports = pgPool => {
+
     return {
         getUserByApiKey(apiKey) {
             return pgPool.query(`
@@ -11,12 +13,30 @@ module.exports = pgPool => {
             });
         },
 
+        getUsersByApiKeys(apiKeys) {
+            return pgPool.query(`
+            select *
+              from users
+              where api_key = ANY($1)`, [apiKeys]).then(res => {
+                return orderedFor(res.rows, apiKeys, 'apiKey', true)
+            });
+        },
+
         getUserById(userId) {
             return pgPool.query(`
             select *
               from users
               where id = $1`, [userId]).then(res => {
-                return humps.camelizeKeys(res.rows[0])
+                return humps.camelizeKeys(res.rows[0]);
+            });
+        },
+
+        getUsersByIds(userIds) {
+            return pgPool.query(`
+            select *
+              from users
+              where id = ANY($1)`, [userIds]).then(res => {
+                return orderedFor(res.rows, userIds, 'id', true)
             });
         },
 
